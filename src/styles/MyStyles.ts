@@ -9,8 +9,8 @@ box-sizing: border-box;
 body{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.5rem;
-    color: #000;
-    background-color: #ccc;
+    color: ${({ theme }) => theme.colors.text} ;
+    background-color: ${({ theme }) => theme.colors.backgroundColor};
 }
 `;
 
@@ -20,7 +20,7 @@ export const Header = styled.header`
   left: 0;
   z-index: 1000;
   width: 100%;
-  background-color: blue;
+  background-color: ${({ theme }) => theme.colors.primary};
   padding: 0 0.5rem;
   display: flex;
   justify-content: space-between;
