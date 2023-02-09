@@ -1,7 +1,12 @@
-import React from "react";
+import { Section } from "../styles/MyStyles";
+import Head from "./Head";
 
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <Section>
+      <Head />
+    </Section>
+  );
 };
 
 export default Home;
