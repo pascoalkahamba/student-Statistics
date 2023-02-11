@@ -1,19 +1,20 @@
-import React, { createContext } from "react";
+import { createContext, useState } from "react";
 
-type ChildrenProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLDivElement>,
-  HTMLDivElement
->;
+interface GlobalStorageProps {
+  children: React.ReactNode;
+}
 
 export interface GlobalProps {
   name: string;
+  setState: React.Dispatch<React.SetStateAction<undefined>>;
 }
 
 export const GlobalContext = createContext<GlobalProps | null>(null);
 
-export const GlobalStorage = ({ children }: ChildrenProps) => {
+export const GlobalStorage = ({ children }: GlobalStorageProps) => {
+  const [state, setState] = useState();
   return (
-    <GlobalContext.Provider value={{ name: "Pascoal" }}>
+    <GlobalContext.Provider value={{ name: "Pascoal", setState }}>
       {children}
     </GlobalContext.Provider>
   );

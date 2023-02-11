@@ -2,16 +2,18 @@ import { useContext } from "react";
 import { Switch } from "@mui/material";
 import { ThemeContext } from "styled-components";
 import { Header } from "../styles/MyStyles";
-import { GlobalContext, GlobalProps } from "./GlobalContext";
+
+import useGlobalStarage from "../hooks/useGlobalStarage";
 
 interface HeadProps {
   toggleTheme: () => void;
 }
 const Head = ({ toggleTheme }: HeadProps) => {
-  const context = useContext(GlobalContext) as GlobalProps;
-  const { name } = context;
-
   const { title } = useContext(ThemeContext);
+  const {
+    global: { name },
+  } = useGlobalStarage();
+
   console.log(name);
   return (
     <Header>

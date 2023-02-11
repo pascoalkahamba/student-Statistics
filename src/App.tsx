@@ -5,13 +5,11 @@ import Home from "./components/Home";
 function App() {
   return (
     <GlobalStorage>
-      <div>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-          </Routes>
-        </BrowserRouter>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
     </GlobalStorage>
   );
 }
