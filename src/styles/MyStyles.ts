@@ -9,8 +9,8 @@ box-sizing: border-box;
 body{
     font-family: 'Poppins', sans-serif;
     font-size: 1.5rem;
-    color: ${({ theme }) => theme.colors.text} ;
-    background-color: ${({ theme }) => theme.colors.second};
+    /* color: ${({ theme }) => theme.colors.text} ;
+    background-color: ${({ theme }) => theme.colors.second}; */
 }
 `;
 
@@ -21,7 +21,7 @@ export const Header = styled.header`
   z-index: 1000;
   width: 100%;
   height: 70px;
-  background-color: ${({ theme }) => theme.colors.primary};
+  /* background-color: ${({ theme }) => theme.colors.primary}; */
   padding: 0 0.5rem;
   display: flex;
   justify-content: space-between;
@@ -29,5 +29,5 @@ export const Header = styled.header`
 `;
 
 export const Section = styled.section`
-  background-color: ${({ theme }) => theme.colors.second};
+  /* background-color: ${({ theme }) => theme.colors.second}; */
 `;
