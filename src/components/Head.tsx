@@ -1,6 +1,7 @@
 import { Switch } from "@mui/material";
-import { Header } from "../styles/MyStyles";
+
 import useGlobalStarage from "../hooks/useGlobalStarage";
+import { Header } from "../themes/MyStyles";
 
 const Head = () => {
   const {
