@@ -1,21 +1,36 @@
-import { createContext, useState } from "react";
+import { createContext, useCallback, useMemo, useState } from "react";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "../themes/ThemeLight";
+import { darkTheme } from "../themes/ThemeDark";
 
 interface GlobalStorageProps {
   children: React.ReactNode;
 }
 
+type ThemeMode = "light" | "dark";
+
 export interface GlobalProps {
-  name: string;
-  setState: React.Dispatch<React.SetStateAction<undefined>>;
+  themeName: ThemeMode;
+  toggleTheme: () => void;
 }
 
 export const GlobalContext = createContext<GlobalProps | null>(null);
 
 export const GlobalStorage = ({ children }: GlobalStorageProps) => {
-  const [state, setState] = useState();
+  const [themeName, setThemeName] = useState<ThemeMode>("light");
+
+  const toggleTheme = useCallback(() => {}, []);
+  setThemeName((otherTheme) => (otherTheme === "light" ? "dark" : "light"));
+
+  const theme = useMemo(() => {
+    if (themeName === "light") return lightTheme;
+
+    return darkTheme;
+  }, [themeName]);
+
   return (
-    <GlobalContext.Provider value={{ name: "Pascoal", setState }}>
-      {children}
+    <GlobalContext.Provider value={{ themeName, toggleTheme }}>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </GlobalContext.Provider>
   );
 };

@@ -1,18 +1,16 @@
-import { useContext } from "react";
 import { Switch } from "@mui/material";
-import { ThemeContext } from "styled-components";
 import { Header } from "../styles/MyStyles";
+import useGlobalStarage from "../hooks/useGlobalStarage";
 
-interface HeadProps {
-  toggleTheme: () => void;
-}
-const Head = ({ toggleTheme }: HeadProps) => {
-  const { title } = useContext(ThemeContext);
+const Head = () => {
+  const {
+    global: { themeName, toggleTheme },
+  } = useGlobalStarage();
 
   return (
     <Header>
       <h3>Pascoal Kahamba</h3>
-      <Switch onClick={toggleTheme} checked={title === "dark"} />
+      <Switch onClick={toggleTheme} checked={themeName === "dark"} />
     </Header>
   );
 };
