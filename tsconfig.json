@@ -17,6 +17,5 @@
     "jsx": "react-jsx"
   },
   "include": ["src", "src/styles/.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }],
-  "files": ["src/themes/Styles.d.ts"]
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -1,14 +1,11 @@
-import usePersistedStorage from "../hooks/usePersistedStorage";
-
+import { Section } from "../themes/MyStyles";
 import Head from "./Head";
 
 const Home = () => {
-  // const [theme, setTheme] = usePersistedStorage<ThemeMode>("theme", "light");
-
   return (
-    <section>
+    <Section>
       <Head />
-    </section>
+    </Section>
   );
 };
 

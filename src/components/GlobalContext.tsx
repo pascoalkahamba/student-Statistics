@@ -1,9 +1,6 @@
-import { createContext, useCallback, useMemo, useState } from "react";
-import { ThemeProvider } from "@mui/material";
-import { lightTheme } from "../themes/ThemeLight";
-import { darkTheme } from "../themes/ThemeDark";
-import { Box } from "@mui/system";
-import { GlobalStyles } from "../themes/MyStyles";
+import { createContext, useCallback } from "react";
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+
 import usePersistedStorage from "../hooks/usePersistedStorage";
 
 interface GlobalStorageProps {
@@ -29,23 +26,17 @@ export const GlobalStorage = ({ children }: GlobalStorageProps) => {
     setThemeName((otherTheme) => (otherTheme === "light" ? "dark" : "light"));
   }, []);
 
-  const theme = useMemo(() => {
-    if (themeName === "light") return lightTheme;
-
-    return darkTheme;
-  }, [themeName]);
+  const theme = createTheme({
+    palette: {
+      mode: themeName,
+    },
+  });
 
   return (
     <GlobalContext.Provider value={{ themeName, toggleTheme }}>
       <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        <Box
-          width={"100vw"}
-          height={"100vh"}
-          bgcolor={theme.palette.background.default}
-        >
-          {children}
-        </Box>
+        <CssBaseline />
+        {children}
       </ThemeProvider>
     </GlobalContext.Provider>
   );

@@ -1,4 +1,5 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle, css } from "styled-components";
+import { Button } from "@mui/material";
 
 export const GlobalStyles = createGlobalStyle`
 *{
@@ -10,6 +11,7 @@ export const GlobalStyles = createGlobalStyle`
 body{
  font-family: 'Poppins', sans-serif;
  font-size: 1.5rem;
+ 
 }
 `;
 
@@ -21,4 +23,12 @@ export const Header = styled.header`
   justify-content: space-between;
   align-items: center;
   background: #828a95;
+`;
+
+export const Section = styled.section`
+  background-color: initial;
+`;
+
+export const ButtonTwo = styled(Button)`
+  background-color: yellow;
 `;
