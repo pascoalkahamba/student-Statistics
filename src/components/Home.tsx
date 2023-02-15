@@ -1,3 +1,4 @@
+import React from "react";
 import { Section } from "../themes/MyStyles";
 import Head from "./Head";
 
