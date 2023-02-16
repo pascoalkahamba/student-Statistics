@@ -1,6 +1,10 @@
 import { createContext, useCallback } from "react";
-import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-
+import {
+  createTheme,
+  CssBaseline,
+  ThemeProvider as GlobalTheme,
+} from "@mui/material";
+import { ThemeProvider } from "styled-components";
 import usePersistedStorage from "../hooks/usePersistedStorage";
 import { light } from "@mui/material/styles/createPalette";
 
@@ -8,22 +12,11 @@ interface GlobalStorageProps {
   children: React.ReactNode;
 }
 
-type ThemeMode = "light" | "dark";
+export type ThemeMode = "light" | "dark";
 
 export interface GlobalProps {
   themeName: ThemeMode;
   toggleTheme: () => void;
-  theme: {
-    palette: {
-      primary: {
-        main: string;
-        light: string;
-        dark: string;
-        contrastText: string;
-      };
-      secondary: {};
-    };
-  };
 }
 
 export const GlobalContext = createContext<GlobalProps | null>(null);
@@ -45,11 +38,11 @@ export const GlobalStorage = ({ children }: GlobalStorageProps) => {
   });
 
   return (
-    <GlobalContext.Provider value={{ themeName, toggleTheme, theme }}>
-      <ThemeProvider theme={theme}>
+    <GlobalContext.Provider value={{ themeName, toggleTheme }}>
+      <GlobalTheme theme={theme}>
         <CssBaseline />
-        {children}
-      </ThemeProvider>
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      </GlobalTheme>
     </GlobalContext.Provider>
   );
 };
