@@ -12,7 +12,12 @@ declare module "styled-components" {
         dark: string;
         contrastText: string;
       };
-      secondary: {};
+      secondary: {
+        main: string;
+        light: string;
+        dark: string;
+        contrastText: string;
+      };
       background: {
         default: string;
         paper: string;

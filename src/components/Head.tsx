@@ -1,4 +1,4 @@
-import { Box, Switch, useTheme } from "@mui/material";
+import { Box, Switch, Typography, useTheme } from "@mui/material";
 
 import useGlobalStarage from "../hooks/useGlobalStarage";
 import { Header } from "../themes/MyStyles";
@@ -7,17 +7,24 @@ const Head = () => {
   const {
     global: { toggleTheme },
   } = useGlobalStarage();
+  const theme = useTheme();
   const {
-    palette: { mode },
-  } = useTheme();
+    palette: {
+      mode,
+      primary: { light, dark },
+    },
+  } = theme;
+
   return (
     <Box
-      sx={(theme) => ({
-        header: { backgroundColor: theme.palette.primary[theme.palette.mode] },
+      sx={() => ({
+        header: { backgroundColor: dark },
       })}
     >
       <Header>
-        <h3>Pascoal Kahamba</h3>
+        <Typography variant="h6" display="block" gutterBottom>
+          Pascoal Kahamba
+        </Typography>
         <Switch onClick={toggleTheme} checked={mode === "dark"} />
       </Header>
     </Box>
