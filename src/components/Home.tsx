@@ -13,6 +13,7 @@ import { FatherButton, Header, Span } from "../themes/MyStyles";
 import Head from "./Head";
 import { ThemeContext } from "styled-components";
 import { MdFactCheck } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const listElement = [
@@ -31,7 +32,7 @@ const Home = () => {
       primary: { light, dark },
     },
   } = useTheme();
-
+  const navigete = useNavigate();
   const theme = useTheme();
   return (
     <Box sx={{ width: "100%", marginTop: "50px", padding: ".5rem" }}>
@@ -113,7 +114,11 @@ const Home = () => {
       </List>
       <FatherButton>
         {" "}
-        <Button variant="contained" size="large">
+        <Button
+          variant="contained"
+          size="large"
+          onClick={() => navigete("/number-disciplines-students")}
+        >
           Começar
         </Button>
       </FatherButton>
