@@ -6,6 +6,9 @@ export const GlobalStyles = createGlobalStyle`
  .title{
   background-color: blue;
  }
+ .icon{
+  margin-right: 0px !important;
+ }
  
 `;
 
@@ -30,3 +33,16 @@ export const Section = styled.section`
 export const Div = styles("div")(({ theme }) => ({
   background: theme.palette.background.paper,
 }));
+
+export const Span = styled.span`
+  color: red;
+  margin-right: 5px;
+`;
+
+export const FatherButton = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 0.5rem;
+  justify-content: center;
+  align-items: center;
+`;
