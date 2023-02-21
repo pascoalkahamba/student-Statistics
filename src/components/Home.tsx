@@ -67,7 +67,7 @@ const Home = () => {
         {listElement.map((element, index) => {
           if (index <= 5)
             return (
-              <Typography variant="body2" gutterBottom>
+              <Typography variant="body2" key={element} gutterBottom>
                 <ListItem sx={{ padding: "0" }}>
                   <ListItemIcon>
                     <MdFactCheck />
@@ -101,7 +101,7 @@ const Home = () => {
         {listElement.map((element, index) => {
           if (index >= 6)
             return (
-              <Typography variant="body2" gutterBottom>
+              <Typography variant="body2" key={element} gutterBottom>
                 <ListItem sx={{ padding: "0" }}>
                   <ListItemIcon>
                     <MdFactCheck className="icon" />
