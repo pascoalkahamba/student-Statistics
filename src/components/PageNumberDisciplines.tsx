@@ -3,12 +3,12 @@ import { Box, Typography, useTheme, TextField, Button } from "@mui/material";
 const PageNumberDisciplines = () => {
   const {
     palette: {
-      primary: { dark, main, light },
+      primary: { dark },
     },
   } = useTheme();
 
   return (
-    <Box sx={{ width: "100%", marginTop: "50px", padding: ".5rem" }}>
+    <Box sx={{ width: "100%", marginTop: "80px", padding: ".5rem" }}>
       <Typography
         variant="h4"
         gutterBottom
@@ -46,10 +46,12 @@ const PageNumberDisciplines = () => {
             helperText="Campo não obrigatorio"
           />
           <TextField
+            error
             type="number"
             id="outlined-basic"
-            label="Numero-Disciplinas"
+            label="Numero-de-Disciplinas"
             variant="outlined"
+            helperText="Dados invalidos"
           />
         </Box>
         <Button variant="contained" size="large">
