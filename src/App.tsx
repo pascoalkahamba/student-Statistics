@@ -1,7 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AddingDisciplines from "./components/AddingDisciplines";
 import { GlobalStorage } from "./components/GlobalContext";
 import Head from "./components/Head";
 import Home from "./components/Home";
+import NotFound from "./components/NotFound";
 import PageNumberDisciplines from "./components/PageNumberDisciplines";
 
 function App() {
@@ -15,6 +17,8 @@ function App() {
             path="number-disciplines-students"
             element={<PageNumberDisciplines />}
           />
+          <Route path="adding-diciplines" element={<AddingDisciplines />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </GlobalStorage>

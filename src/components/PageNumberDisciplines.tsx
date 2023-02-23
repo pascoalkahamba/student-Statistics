@@ -1,12 +1,15 @@
 import { Box, Typography, useTheme, TextField, Button } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useGlobalStarage from "../hooks/useGlobalStarage";
+
 import CustomizedSnackbars from "./CustomizedSnackbars";
 
 type AnalysisProps = React.MouseEventHandler<HTMLButtonElement> | undefined;
 
 const PageNumberDisciplines = () => {
   const [value, setValue] = useState<number>(0);
+  const navigate = useNavigate();
   const {
     global: { setOpen, open },
   } = useGlobalStarage();
@@ -19,7 +22,12 @@ const PageNumberDisciplines = () => {
 
   const startAnalysis: AnalysisProps = () => {
     if (value < 2) setOpen(true);
+    else {
+      setOpen(false);
+      navigate("/adding-diciplines");
+    }
   };
+
   return (
     <Box sx={{ width: "100%", marginTop: "80px", padding: ".5rem" }}>
       <Typography

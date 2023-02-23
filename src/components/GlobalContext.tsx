@@ -6,7 +6,6 @@ import {
 } from "@mui/material";
 import { ThemeProvider } from "styled-components";
 import usePersistedStorage from "../hooks/usePersistedStorage";
-import { light } from "@mui/material/styles/createPalette";
 
 interface GlobalStorageProps {
   children: React.ReactNode;
