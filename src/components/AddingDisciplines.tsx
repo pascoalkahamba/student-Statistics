@@ -6,6 +6,15 @@ type ChangeProps =
   | React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
   | undefined;
 
+type addDisciplinesProps =
+  | React.MouseEventHandler<HTMLButtonElement>
+  | undefined;
+
+interface ValidateProps {
+  name: string;
+  number: number;
+}
+
 const AddingDisciplines = () => {
   const [input, setInput] = useState({ name: "", number: 0 });
   const {
@@ -17,6 +26,10 @@ const AddingDisciplines = () => {
   const handleChange: ChangeProps = ({ target }) => {
     setInput({ ...input, [target.id]: target.value });
   };
+
+  function isNotEmpty({ name, number }: ValidateProps) {}
+
+  const addDisciplines: addDisciplinesProps = () => {};
 
   return (
     <Box sx={{ width: "100%", marginTop: "80px", padding: ".5rem" }}>
@@ -67,7 +80,7 @@ const AddingDisciplines = () => {
             variant="outlined"
           />
         </Box>
-        <Button variant="contained" size="large">
+        <Button variant="contained" size="large" onClick={addDisciplines}>
           Adicionar
         </Button>
       </Box>

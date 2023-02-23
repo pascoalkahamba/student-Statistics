@@ -11,7 +11,7 @@ const PageNumberDisciplines = () => {
   const [value, setValue] = useState<number>(0);
   const navigate = useNavigate();
   const {
-    global: { setOpen, open },
+    global: { setOpen, open, setErrorMessage },
   } = useGlobalStarage();
 
   const {
@@ -21,8 +21,10 @@ const PageNumberDisciplines = () => {
   } = useTheme();
 
   const startAnalysis: AnalysisProps = () => {
-    if (value < 2) setOpen(true);
-    else {
+    if (value < 2) {
+      setOpen(true);
+      setErrorMessage("O numero de disciplinas tem de ser maior ou igual a 2");
+    } else {
       setOpen(false);
       navigate("/adding-diciplines");
     }

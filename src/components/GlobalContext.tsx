@@ -17,13 +17,16 @@ export interface GlobalProps {
   themeName: ThemeMode;
   toggleTheme: () => void;
   open: boolean;
+  errorMessage: string;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const GlobalContext = createContext<GlobalProps | null>(null);
 
 export const GlobalStorage = ({ children }: GlobalStorageProps) => {
   const [open, setOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [themeName, setThemeName] = usePersistedStorage<ThemeMode>(
     "theme",
     "light"
@@ -40,7 +43,16 @@ export const GlobalStorage = ({ children }: GlobalStorageProps) => {
   });
 
   return (
-    <GlobalContext.Provider value={{ themeName, toggleTheme, open, setOpen }}>
+    <GlobalContext.Provider
+      value={{
+        themeName,
+        errorMessage,
+        toggleTheme,
+        open,
+        setOpen,
+        setErrorMessage,
+      }}
+    >
       <GlobalTheme theme={theme}>
         <CssBaseline />
         <ThemeProvider theme={theme}>{children}</ThemeProvider>

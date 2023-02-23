@@ -13,7 +13,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 export default function CustomizedSnackbars() {
   const {
-    global: { open, setOpen },
+    global: { open, setOpen, errorMessage },
   } = useGlobalStarage();
 
   const handleClose = (
@@ -31,7 +31,7 @@ export default function CustomizedSnackbars() {
     <Stack spacing={2} sx={{ width: "100%" }}>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          O numero de disciplinas tem de ser maior ou igual a 2
+          {errorMessage}
         </Alert>
       </Snackbar>
     </Stack>
