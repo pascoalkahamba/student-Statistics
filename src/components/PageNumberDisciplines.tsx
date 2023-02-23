@@ -1,12 +1,25 @@
 import { Box, Typography, useTheme, TextField, Button } from "@mui/material";
+import { useState } from "react";
+import useGlobalStarage from "../hooks/useGlobalStarage";
+import CustomizedSnackbars from "./CustomizedSnackbars";
+
+type AnalysisProps = React.MouseEventHandler<HTMLButtonElement> | undefined;
 
 const PageNumberDisciplines = () => {
+  const [value, setValue] = useState<number>(0);
+  const {
+    global: { setOpen, open },
+  } = useGlobalStarage();
+
   const {
     palette: {
       primary: { dark },
     },
   } = useTheme();
 
+  const startAnalysis: AnalysisProps = () => {
+    if (value < 2) setOpen(true);
+  };
   return (
     <Box sx={{ width: "100%", marginTop: "80px", padding: ".5rem" }}>
       <Typography
@@ -46,18 +59,23 @@ const PageNumberDisciplines = () => {
             helperText="Campo não obrigatorio"
           />
           <TextField
-            error
+            error={open}
             type="number"
             id="outlined-basic"
             label="Numero-de-Disciplinas"
             variant="outlined"
-            helperText="Dados invalidos"
+            onChange={({ target }) => setValue(+target.value)}
+            defaultValue={value}
+            helperText={
+              open && "Apenas valores igual ou acima de 2 são permitidos"
+            }
           />
         </Box>
-        <Button variant="contained" size="large">
+        <Button variant="contained" size="large" onClick={startAnalysis}>
           Começar
         </Button>
       </Box>
+      <CustomizedSnackbars />
     </Box>
   );
 };

@@ -1,4 +1,4 @@
-import { createContext, useCallback } from "react";
+import { createContext, useCallback, useState } from "react";
 import {
   createTheme,
   CssBaseline,
@@ -17,11 +17,14 @@ export type ThemeMode = "light" | "dark";
 export interface GlobalProps {
   themeName: ThemeMode;
   toggleTheme: () => void;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const GlobalContext = createContext<GlobalProps | null>(null);
 
 export const GlobalStorage = ({ children }: GlobalStorageProps) => {
+  const [open, setOpen] = useState(false);
   const [themeName, setThemeName] = usePersistedStorage<ThemeMode>(
     "theme",
     "light"
@@ -38,7 +41,7 @@ export const GlobalStorage = ({ children }: GlobalStorageProps) => {
   });
 
   return (
-    <GlobalContext.Provider value={{ themeName, toggleTheme }}>
+    <GlobalContext.Provider value={{ themeName, toggleTheme, open, setOpen }}>
       <GlobalTheme theme={theme}>
         <CssBaseline />
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
