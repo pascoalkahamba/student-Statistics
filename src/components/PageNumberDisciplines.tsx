@@ -57,7 +57,7 @@ const PageNumberDisciplines = () => {
           component="div"
           sx={{
             display: "flex",
-            gap: "5rem",
+            gap: "4rem",
           }}
         >
           <TextField

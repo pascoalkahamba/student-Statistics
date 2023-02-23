@@ -1,12 +1,22 @@
+import { useState } from "react";
 import { Box, Typography, useTheme, TextField, Button } from "@mui/material";
 import CustomizedSnackbars from "./CustomizedSnackbars";
 
+type ChangeProps =
+  | React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+  | undefined;
+
 const AddingDisciplines = () => {
+  const [input, setInput] = useState({ name: "", number: 0 });
   const {
     palette: {
       primary: { dark },
     },
   } = useTheme();
+
+  const handleChange: ChangeProps = ({ target }) => {
+    setInput({ ...input, [target.id]: target.value });
+  };
 
   return (
     <Box sx={{ width: "100%", marginTop: "80px", padding: ".5rem" }}>
@@ -38,17 +48,21 @@ const AddingDisciplines = () => {
           component="div"
           sx={{
             display: "flex",
-            gap: "5rem",
+            gap: "4rem",
           }}
         >
           <TextField
-            id="outlined-basic"
+            onChange={handleChange}
+            defaultValue={input.name}
+            id="name"
             label="Nome da disciplina"
             variant="outlined"
           />
           <TextField
+            onChange={handleChange}
+            defaultValue={input.number}
             type="number"
-            id="outlined-basic"
+            id="number"
             label="Nota da disciplina"
             variant="outlined"
           />
