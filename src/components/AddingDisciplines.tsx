@@ -31,7 +31,7 @@ const AddingDisciplines = () => {
   } = useTheme();
 
   const handleChange: ChangeProps = ({ target }) => {
-    setInput({ ...input, [target.id]: +target.value });
+    setInput({ ...input, [target.id]: target.value });
   };
 
   function isNotEmpty({ name, number }: ValidateProps) {
@@ -43,7 +43,7 @@ const AddingDisciplines = () => {
       setNumberError(true);
     }
 
-    if (name === "" || number < 0 || number > 20) {
+    if (name === "" || number < 0 || number > 20 || number === "") {
       setErrorMessage(
         "O campo NOME DA DISCIPLINA não pode estar vazio, e a nota tem estar entre 0 e 20"
       );
@@ -106,7 +106,7 @@ const AddingDisciplines = () => {
           <TextField
             error={numberError}
             onChange={handleChange}
-            defaultValue={+input.number}
+            defaultValue={input.number}
             type="number"
             id="number"
             label="Nota da disciplina"

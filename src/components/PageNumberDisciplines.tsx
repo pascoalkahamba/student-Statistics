@@ -76,9 +76,7 @@ const PageNumberDisciplines = () => {
             variant="outlined"
             onChange={({ target }) => setValue(+target.value)}
             defaultValue={value}
-            helperText={
-              open && "Apenas valores igual ou acima de 2 são permitidos"
-            }
+            helperText={open && "Valor Inválido"}
           />
         </Box>
         <Button variant="contained" size="large" onClick={startAnalysis}>

@@ -5,8 +5,8 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import useGlobalStarage from "../hooks/useGlobalStarage";
 
 interface SnackbarsProps {
-  setNumberError: React.Dispatch<React.SetStateAction<boolean>>;
-  setNameError: React.Dispatch<React.SetStateAction<boolean>>;
+  setNumberError?: React.Dispatch<React.SetStateAction<boolean>>;
+  setNameError?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -31,8 +31,10 @@ export default function CustomizedSnackbars({
     if (reason === "clickaway") {
       return;
     }
-    setNameError(false);
-    setNumberError(false);
+    if (setNameError) setNameError(false);
+
+    if (setNumberError) setNumberError(false);
+
     setOpen(false);
   };
 
