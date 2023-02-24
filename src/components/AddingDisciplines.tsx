@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Box, Typography, useTheme, TextField, Button } from "@mui/material";
 import CustomizedSnackbars from "./CustomizedSnackbars";
+import useGlobalStarage from "../hooks/useGlobalStarage";
 
 type ChangeProps =
   | React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
@@ -12,11 +13,17 @@ type addDisciplinesProps =
 
 interface ValidateProps {
   name: string;
-  number: number;
+  number: number | string;
 }
 
 const AddingDisciplines = () => {
   const [input, setInput] = useState({ name: "", number: 0 });
+  const [nameError, setNameError] = useState(false);
+  const [numberError, setNumberError] = useState(false);
+
+  const {
+    global: { setErrorMessage, setOpen, open },
+  } = useGlobalStarage();
   const {
     palette: {
       primary: { dark },
@@ -24,13 +31,36 @@ const AddingDisciplines = () => {
   } = useTheme();
 
   const handleChange: ChangeProps = ({ target }) => {
-    setInput({ ...input, [target.id]: target.value });
+    setInput({ ...input, [target.id]: +target.value });
   };
 
-  function isNotEmpty({ name, number }: ValidateProps) {}
+  function isNotEmpty({ name, number }: ValidateProps) {
+    if (name === "") {
+      setNameError(true);
+    }
 
-  const addDisciplines: addDisciplinesProps = () => {};
+    if (number < 0 || number > 20 || number === "") {
+      setNumberError(true);
+    }
 
+    if (name === "" || number < 0 || number > 20) {
+      setErrorMessage(
+        "O campo NOME DA DISCIPLINA não pode estar vazio, e a nota tem estar entre 0 e 20"
+      );
+
+      return true;
+    }
+  }
+
+  const addDisciplines: addDisciplinesProps = () => {
+    if (isNotEmpty(input)) setOpen(true);
+    else {
+      alert("Ok");
+    }
+  };
+  console.log(nameError);
+  console.log(numberError);
+  console.log(open);
   return (
     <Box sx={{ width: "100%", marginTop: "80px", padding: ".5rem" }}>
       <Typography
@@ -65,26 +95,33 @@ const AddingDisciplines = () => {
           }}
         >
           <TextField
+            error={nameError}
             onChange={handleChange}
             defaultValue={input.name}
             id="name"
             label="Nome da disciplina"
             variant="outlined"
+            helperText={nameError && "Valor Inválido"}
           />
           <TextField
+            error={numberError}
             onChange={handleChange}
-            defaultValue={input.number}
+            defaultValue={+input.number}
             type="number"
             id="number"
             label="Nota da disciplina"
             variant="outlined"
+            helperText={numberError && "Valor Inválido"}
           />
         </Box>
         <Button variant="contained" size="large" onClick={addDisciplines}>
           Adicionar
         </Button>
       </Box>
-      <CustomizedSnackbars />
+      <CustomizedSnackbars
+        setNumberError={setNumberError}
+        setNameError={setNameError}
+      />
     </Box>
   );
 };
