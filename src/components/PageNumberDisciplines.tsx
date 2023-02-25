@@ -69,6 +69,7 @@ const PageNumberDisciplines = () => {
             helperText="Campo não obrigatorio"
           />
           <TextField
+            required
             error={open}
             type="number"
             id="outlined-basic"

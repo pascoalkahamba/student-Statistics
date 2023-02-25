@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AddingDisciplines from "./components/AddingDisciplines";
+import FinalResults from "./components/FinalResults";
 import { GlobalStorage } from "./components/GlobalContext";
 import Head from "./components/Head";
 import Home from "./components/Home";
@@ -19,6 +20,7 @@ function App() {
           />
           <Route path="adding-diciplines" element={<AddingDisciplines />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="final-results" element={<FinalResults />} />
         </Routes>
       </BrowserRouter>
     </GlobalStorage>

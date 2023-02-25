@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Box, Typography, useTheme, TextField, Button } from "@mui/material";
 import CustomizedSnackbars from "./CustomizedSnackbars";
 import useGlobalStarage from "../hooks/useGlobalStarage";
+import { useNavigate } from "react-router-dom";
 
 type ChangeProps =
   | React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
@@ -30,6 +31,7 @@ const AddingDisciplines = () => {
     },
   } = useTheme();
 
+  const navigate = useNavigate();
   const handleChange: ChangeProps = ({ target }) => {
     setInput({ ...input, [target.id]: target.value });
   };
@@ -55,12 +57,10 @@ const AddingDisciplines = () => {
   const addDisciplines: addDisciplinesProps = () => {
     if (isNotEmpty(input)) setOpen(true);
     else {
-      alert("Ok");
+      navigate("/final-results");
     }
   };
-  console.log(nameError);
-  console.log(numberError);
-  console.log(open);
+
   return (
     <Box sx={{ width: "100%", marginTop: "80px", padding: ".5rem" }}>
       <Typography
@@ -95,6 +95,7 @@ const AddingDisciplines = () => {
           }}
         >
           <TextField
+            required
             error={nameError}
             onChange={handleChange}
             defaultValue={input.name}
@@ -104,6 +105,7 @@ const AddingDisciplines = () => {
             helperText={nameError && "Valor Inválido"}
           />
           <TextField
+            required
             error={numberError}
             onChange={handleChange}
             defaultValue={input.number}
