@@ -24,7 +24,7 @@ const AddingDisciplines = () => {
   const [disciplineNumber, setDisciplineNumber] = useState(0);
 
   const {
-    global: { setErrorMessage, setOpen },
+    global: { setErrorMessage, setOpen, value },
   } = useGlobalStarage();
   const {
     palette: {
@@ -58,7 +58,11 @@ const AddingDisciplines = () => {
   const addDisciplines: addDisciplinesProps = () => {
     if (isEmpty(input)) setOpen(true);
     else {
-      navigate("/final-results");
+      if (disciplineNumber < value) {
+        setDisciplineNumber((before) => before + 1);
+      } else {
+        navigate("/final-results");
+      }
     }
   };
 
@@ -73,7 +77,7 @@ const AddingDisciplines = () => {
           borderRadius: ".3rem",
         })}
       >
-        Disciplina
+        Disciplina {disciplineNumber > 0 ? disciplineNumber : ""}
       </Typography>
       <Box
         component="form"
