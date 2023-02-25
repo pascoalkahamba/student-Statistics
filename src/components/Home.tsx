@@ -104,7 +104,7 @@ const Home = () => {
               <Typography variant="body2" key={element} gutterBottom>
                 <ListItem sx={{ padding: "0" }}>
                   <ListItemIcon>
-                    <MdFactCheck className="icon" />
+                    <MdFactCheck />
                   </ListItemIcon>
                   <ListItemText primary={element} />
                 </ListItem>

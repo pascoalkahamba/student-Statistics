@@ -9,7 +9,7 @@ type AnalysisProps = React.MouseEventHandler<HTMLButtonElement> | undefined;
 const PageNumberDisciplines = () => {
   const navigate = useNavigate();
   const {
-    global: { setOpen, open, setErrorMessage, value, setValue },
+    global: { setOpen, open, setFeedBack, value, setValue },
   } = useGlobalStarage();
 
   const {
@@ -21,7 +21,10 @@ const PageNumberDisciplines = () => {
   const startAnalysis: AnalysisProps = () => {
     if (value < 2) {
       setOpen(true);
-      setErrorMessage("O numero de disciplinas tem de ser maior ou igual a 2");
+      setFeedBack({
+        kind: "error",
+        message: "O numero de disciplinas tem de ser maior ou igual a 2",
+      });
     } else {
       setOpen(false);
       navigate("/adding-diciplines");

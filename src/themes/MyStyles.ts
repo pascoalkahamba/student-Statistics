@@ -6,9 +6,7 @@ export const GlobalStyles = createGlobalStyle`
  .title{
   background-color: blue;
  }
- .icon{
-  margin-right: 0px !important;
- }
+ 
  
 `;
 

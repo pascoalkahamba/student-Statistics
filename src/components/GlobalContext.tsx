@@ -11,29 +11,31 @@ interface GlobalStorageProps {
   children: React.ReactNode;
 }
 
+interface StudentsDataProps {
+  discipline: string;
+  note: number;
+}
+
+interface FeedBackProps {
+  kind: KindProps;
+  message: string;
+}
+
 export type ThemeMode = "light" | "dark";
+
+type KindProps = "error" | "success" | "info" | "warning";
 
 export interface GlobalProps {
   themeName: ThemeMode;
   toggleTheme: () => void;
   open: boolean;
   value: number;
-  errorMessage: string;
-  studentData: {
-    discipline: string;
-    note: number;
-  }[];
+  feedBack: FeedBackProps;
+  studentData: StudentsDataProps[];
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
+  setFeedBack: React.Dispatch<React.SetStateAction<FeedBackProps>>;
   setValue: React.Dispatch<React.SetStateAction<number>>;
-  setStudentData: React.Dispatch<
-    React.SetStateAction<
-      {
-        discipline: string;
-        note: number;
-      }[]
-    >
-  >;
+  setStudentData: React.Dispatch<React.SetStateAction<StudentsDataProps[]>>;
 }
 
 export const GlobalContext = createContext<GlobalProps | null>(null);
@@ -41,13 +43,16 @@ export const GlobalContext = createContext<GlobalProps | null>(null);
 export const GlobalStorage = ({ children }: GlobalStorageProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(0);
-  const [studentData, setStudentData] = useState([{ discipline: "", note: 0 }]);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [studentData, setStudentData] = useState<StudentsDataProps[]>([]);
+  const [feedBack, setFeedBack] = useState<FeedBackProps>({
+    kind: "error",
+    message: "",
+  });
   const [themeName, setThemeName] = usePersistedStorage<ThemeMode>(
     "theme",
     "light"
   );
-
+  console.log(feedBack);
   const toggleTheme = useCallback(() => {
     setThemeName((otherTheme) => (otherTheme === "light" ? "dark" : "light"));
   }, []);
@@ -62,7 +67,7 @@ export const GlobalStorage = ({ children }: GlobalStorageProps) => {
     <GlobalContext.Provider
       value={{
         themeName,
-        errorMessage,
+        feedBack,
         toggleTheme,
         open,
         value,
@@ -70,7 +75,7 @@ export const GlobalStorage = ({ children }: GlobalStorageProps) => {
         setStudentData,
         setOpen,
         setValue,
-        setErrorMessage,
+        setFeedBack,
       }}
     >
       <GlobalTheme theme={theme}>

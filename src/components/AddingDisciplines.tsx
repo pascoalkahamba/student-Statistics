@@ -24,7 +24,7 @@ const AddingDisciplines = () => {
   const [disciplineNumber, setDisciplineNumber] = useState(0);
 
   const {
-    global: { setErrorMessage, setOpen, value },
+    global: { setFeedBack, setOpen, value, open, setStudentData, studentData },
   } = useGlobalStarage();
   const {
     palette: {
@@ -47,9 +47,11 @@ const AddingDisciplines = () => {
     }
 
     if (name === "" || number < 0 || number > 20 || number === "") {
-      setErrorMessage(
-        "O campo NOME DA DISCIPLINA não pode estar vazio, e a nota tem estar entre 0 e 20"
-      );
+      setFeedBack({
+        kind: "error",
+        message:
+          "O campo NOME DA DISCIPLINA não pode estar vazio, e a nota tem estar entre 0 e 20",
+      });
 
       return true;
     }
@@ -60,11 +62,21 @@ const AddingDisciplines = () => {
     else {
       if (disciplineNumber < value) {
         setDisciplineNumber((before) => before + 1);
+        setStudentData([
+          ...studentData,
+          { discipline: input.name, note: input.number },
+        ]);
       } else {
-        navigate("/final-results");
+        setOpen(true);
+        setFeedBack({
+          kind: "success",
+          message: "Ultimo registo realizado com sucesso",
+        });
       }
     }
   };
+
+  console.log(studentData);
 
   return (
     <Box sx={{ width: "100%", marginTop: "80px", padding: ".5rem" }}>
@@ -126,6 +138,8 @@ const AddingDisciplines = () => {
         </Button>
       </Box>
       <CustomizedSnackbars
+        nameError={nameError}
+        numberError={numberError}
         setNumberError={setNumberError}
         setNameError={setNameError}
       />
