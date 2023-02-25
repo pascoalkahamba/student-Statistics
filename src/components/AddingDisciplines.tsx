@@ -21,9 +21,10 @@ const AddingDisciplines = () => {
   const [input, setInput] = useState({ name: "", number: 0 });
   const [nameError, setNameError] = useState(false);
   const [numberError, setNumberError] = useState(false);
+  const [disciplineNumber, setDisciplineNumber] = useState(0);
 
   const {
-    global: { setErrorMessage, setOpen, open },
+    global: { setErrorMessage, setOpen },
   } = useGlobalStarage();
   const {
     palette: {
@@ -36,7 +37,7 @@ const AddingDisciplines = () => {
     setInput({ ...input, [target.id]: target.value });
   };
 
-  function isNotEmpty({ name, number }: ValidateProps) {
+  function isEmpty({ name, number }: ValidateProps) {
     if (name === "") {
       setNameError(true);
     }
@@ -55,7 +56,7 @@ const AddingDisciplines = () => {
   }
 
   const addDisciplines: addDisciplinesProps = () => {
-    if (isNotEmpty(input)) setOpen(true);
+    if (isEmpty(input)) setOpen(true);
     else {
       navigate("/final-results");
     }

@@ -8,10 +8,9 @@ import CustomizedSnackbars from "./CustomizedSnackbars";
 type AnalysisProps = React.MouseEventHandler<HTMLButtonElement> | undefined;
 
 const PageNumberDisciplines = () => {
-  const [value, setValue] = useState<number>(0);
   const navigate = useNavigate();
   const {
-    global: { setOpen, open, setErrorMessage },
+    global: { setOpen, open, setErrorMessage, value, setValue },
   } = useGlobalStarage();
 
   const {
