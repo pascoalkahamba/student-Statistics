@@ -21,7 +21,7 @@ const AddingDisciplines = () => {
   const [input, setInput] = useState({ name: "", number: 0 });
   const [nameError, setNameError] = useState(false);
   const [numberError, setNumberError] = useState(false);
-  const [disciplineNumber, setDisciplineNumber] = useState(0);
+  const [disciplineNumber, setDisciplineNumber] = useState(1);
 
   const {
     global: { setFeedBack, setOpen, value, open, setStudentData, studentData },
@@ -59,7 +59,7 @@ const AddingDisciplines = () => {
   const addDisciplines: addDisciplinesProps = () => {
     if (isEmpty(input)) setOpen(true);
     else {
-      if (disciplineNumber < value) {
+      if (disciplineNumber <= value) {
         setDisciplineNumber((before) => before + 1);
         setStudentData([
           ...studentData,
@@ -88,7 +88,7 @@ const AddingDisciplines = () => {
           borderRadius: ".3rem",
         })}
       >
-        Disciplina {disciplineNumber > 0 ? disciplineNumber : ""}
+        Disciplina {disciplineNumber}
       </Typography>
       <Box
         component="form"

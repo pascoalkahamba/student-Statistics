@@ -55,3 +55,7 @@ export const Item = styles(Paper)(({ theme }) => ({
   justifyContent: "space-between",
   color: theme.palette.text.secondary,
 }));
+
+export const Table = styled.table`
+  display: block;
+`;
