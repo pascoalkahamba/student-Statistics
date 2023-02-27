@@ -32,7 +32,6 @@ const AddingDisciplines = () => {
     },
   } = useTheme();
 
-  const navigate = useNavigate();
   const handleChange: ChangeProps = ({ target }) => {
     setInput({ ...input, [target.id]: target.value });
   };

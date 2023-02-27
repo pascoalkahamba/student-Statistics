@@ -1,5 +1,6 @@
 import styled, { createGlobalStyle } from "styled-components";
 import { styled as styles } from "@mui/material";
+import Paper from "@mui/material/Paper";
 
 export const GlobalStyles = createGlobalStyle`
  
@@ -44,3 +45,13 @@ export const FatherButton = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export const Item = styles(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#ddd",
+  ...theme.typography.body2,
+  padding: theme.spacing(2),
+  alignItems: "center",
+  display: "flex",
+  justifyContent: "space-between",
+  color: theme.palette.text.secondary,
+}));

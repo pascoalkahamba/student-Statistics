@@ -20,8 +20,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 export default function CustomizedSnackbars({
-  nameError,
-  numberError,
   setNameError,
   setNumberError,
 }: SnackbarsProps) {
