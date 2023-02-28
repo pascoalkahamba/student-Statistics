@@ -1,18 +1,7 @@
-import {
-  Box,
-  Stack,
-  Typography,
-  useTheme,
-  TableContainer,
-  Paper,
-  Table,
-  TableHead,
-  TableBody,
-  TableCell,
-  TableRow,
-} from "@mui/material";
+import { Box, Stack, Typography, useTheme } from "@mui/material";
 import useGlobalStarage from "../hooks/useGlobalStarage";
 import { Item } from "../themes/MyStyles";
+import { red, green } from "@mui/material/colors";
 
 const FinalResults = () => {
   const {
@@ -42,14 +31,14 @@ const FinalResults = () => {
         {studentData.map(({ discipline, note }) => (
           <Item
             key={discipline}
-            sx={{ border: `2px solid ${note > 9 ? "#57a773" : "#bf4342"}` }}
+            sx={{ border: `2px solid ${note > 9 ? green[500] : red[500]}` }}
           >
             <Typography variant="inherit" gutterBottom>
               {discipline}
             </Typography>
             <Typography
               variant="inherit"
-              sx={{ color: `${note > 9 ? "#57a773" : "#bf4342"}` }}
+              sx={{ color: `${note > 9 ? green[500] : red[500]}` }}
               gutterBottom
             >
               {`${note} Valores`}

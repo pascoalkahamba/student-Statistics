@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Box, Typography, useTheme, TextField, Button } from "@mui/material";
 import useGlobalStarage from "../hooks/useGlobalStarage";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 type ChangeProps =
   | React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
@@ -54,7 +54,7 @@ const AddingDisciplines = () => {
       setFeedBack({
         kind: "error",
         message:
-          "O campo NOME DA DISCIPLINA não pode estar vazio, e a nota tem estar entre 0 e 20",
+          "O campo nome disciplina não pode estar vazio, e a nota tem estar entre 0 e 20",
       });
 
       return true;
@@ -71,8 +71,23 @@ const AddingDisciplines = () => {
   }, [studentData]);
 
   if (studentData.length === numberDisciplines && numberDisciplines !== 0) {
-    console.log("Erro");
     return <Navigate to="/final-results" />;
+  }
+
+  function isDisciplineExists(discipline: boolean) {
+    if (discipline) {
+      setOpen(true);
+      setFeedBack({
+        kind: "warning",
+        message: `A disciplina ${input.name} já foi adicionada`,
+      });
+    } else {
+      setStudentData([
+        ...studentData,
+        { discipline: input.name, note: input.number },
+      ]);
+      setInput({ name: "", number: 0 });
+    }
   }
 
   console.count();
@@ -80,12 +95,11 @@ const AddingDisciplines = () => {
     if (isEmpty(input)) setOpen(true);
     else {
       if (studentData.length < numberDisciplines) {
-        setStudentData([
-          ...studentData,
-          { discipline: input.name, note: input.number },
-        ]);
+        const alreadyExists = studentData.some(
+          ({ discipline }) => discipline === input.name
+        );
 
-        // setInput({ name: "", number: 0 });
+        isDisciplineExists(alreadyExists);
       }
     }
   };
@@ -129,7 +143,7 @@ const AddingDisciplines = () => {
             required
             error={nameError && open}
             onChange={handleChange}
-            defaultValue={input.name}
+            value={input.name}
             id="name"
             label="Nome da disciplina"
             variant="outlined"
@@ -138,7 +152,7 @@ const AddingDisciplines = () => {
             required
             error={numberError && open}
             onChange={handleChange}
-            defaultValue={input.number}
+            value={input.number}
             type="number"
             id="number"
             label="Nota da disciplina"

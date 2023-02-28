@@ -81,7 +81,7 @@ const PageNumberDisciplines = () => {
             label="Numero-de-Disciplinas"
             variant="outlined"
             onChange={({ target }) => setNumberDisciplines(+target.value)}
-            defaultValue={numberDisciplines}
+            value={numberDisciplines}
           />
         </Box>
         <Button variant="contained" size="large" onClick={startAnalysis}>

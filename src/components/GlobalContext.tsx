@@ -2,6 +2,7 @@ import { createContext, useCallback, useState } from "react";
 import {
   createTheme,
   CssBaseline,
+  AlertColor,
   ThemeProvider as GlobalTheme,
 } from "@mui/material";
 import { ThemeProvider } from "styled-components";
@@ -17,13 +18,11 @@ interface StudentsDataProps {
 }
 
 interface FeedBackProps {
-  kind: KindProps;
+  kind: AlertColor;
   message: string;
 }
 
 export type ThemeMode = "light" | "dark";
-
-type KindProps = "error" | "success" | "info" | "warning";
 
 export interface GlobalProps {
   themeName: ThemeMode;
