@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, Typography, useTheme, TextField, Button } from "@mui/material";
-import CustomizedSnackbars from "./CustomizedSnackbars";
 import useGlobalStarage from "../hooks/useGlobalStarage";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 type ChangeProps =
   | React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
@@ -21,10 +20,16 @@ const AddingDisciplines = () => {
   const [input, setInput] = useState({ name: "", number: 0 });
   const [nameError, setNameError] = useState(false);
   const [numberError, setNumberError] = useState(false);
-  const [disciplineNumber, setDisciplineNumber] = useState(1);
 
   const {
-    global: { setFeedBack, setOpen, value, open, setStudentData, studentData },
+    global: {
+      setFeedBack,
+      setOpen,
+      numberDisciplines,
+      open,
+      setStudentData,
+      studentData,
+    },
   } = useGlobalStarage();
   const {
     palette: {
@@ -55,22 +60,32 @@ const AddingDisciplines = () => {
       return true;
     }
   }
+  useEffect(() => {
+    if (studentData.length === numberDisciplines && numberDisciplines !== 0) {
+      setOpen(true);
+      setFeedBack({
+        kind: "success",
+        message: "Ultimo registo realizado com sucesso",
+      });
+    }
+  }, [studentData]);
 
+  if (studentData.length === numberDisciplines && numberDisciplines !== 0) {
+    console.log("Erro");
+    return <Navigate to="/final-results" />;
+  }
+
+  console.count();
   const addDisciplines: addDisciplinesProps = () => {
     if (isEmpty(input)) setOpen(true);
     else {
-      if (disciplineNumber <= value) {
-        setDisciplineNumber((before) => before + 1);
+      if (studentData.length < numberDisciplines) {
         setStudentData([
           ...studentData,
           { discipline: input.name, note: input.number },
         ]);
-      } else {
-        setOpen(true);
-        setFeedBack({
-          kind: "success",
-          message: "Ultimo registo realizado com sucesso",
-        });
+
+        // setInput({ name: "", number: 0 });
       }
     }
   };
@@ -88,7 +103,7 @@ const AddingDisciplines = () => {
           borderRadius: ".3rem",
         })}
       >
-        Disciplina {disciplineNumber}
+        Disciplina {studentData.length + 1}
       </Typography>
       <Box
         component="form"
@@ -112,36 +127,28 @@ const AddingDisciplines = () => {
         >
           <TextField
             required
-            error={nameError}
+            error={nameError && open}
             onChange={handleChange}
             defaultValue={input.name}
             id="name"
             label="Nome da disciplina"
             variant="outlined"
-            helperText={nameError && "Valor Inválido"}
           />
           <TextField
             required
-            error={numberError}
+            error={numberError && open}
             onChange={handleChange}
             defaultValue={input.number}
             type="number"
             id="number"
             label="Nota da disciplina"
             variant="outlined"
-            helperText={numberError && "Valor Inválido"}
           />
         </Box>
         <Button variant="contained" size="large" onClick={addDisciplines}>
           Adicionar
         </Button>
       </Box>
-      <CustomizedSnackbars
-        nameError={nameError}
-        numberError={numberError}
-        setNumberError={setNumberError}
-        setNameError={setNameError}
-      />
     </Box>
   );
 };

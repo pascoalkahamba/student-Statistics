@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AddingDisciplines from "./components/AddingDisciplines";
+import CustomizedSnackbars from "./components/CustomizedSnackbars";
 import FinalResults from "./components/FinalResults";
 import { GlobalStorage } from "./components/GlobalContext";
 import Head from "./components/Head";
@@ -23,6 +24,7 @@ function App() {
           <Route path="final-results" element={<FinalResults />} />
         </Routes>
       </BrowserRouter>
+      <CustomizedSnackbars />
     </GlobalStorage>
   );
 }

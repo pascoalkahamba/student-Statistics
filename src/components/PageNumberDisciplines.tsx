@@ -2,14 +2,18 @@ import { Box, Typography, useTheme, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useGlobalStarage from "../hooks/useGlobalStarage";
 
-import CustomizedSnackbars from "./CustomizedSnackbars";
-
 type AnalysisProps = React.MouseEventHandler<HTMLButtonElement> | undefined;
 
 const PageNumberDisciplines = () => {
   const navigate = useNavigate();
   const {
-    global: { setOpen, open, setFeedBack, value, setValue },
+    global: {
+      setOpen,
+      open,
+      setFeedBack,
+      numberDisciplines,
+      setNumberDisciplines,
+    },
   } = useGlobalStarage();
 
   const {
@@ -19,7 +23,7 @@ const PageNumberDisciplines = () => {
   } = useTheme();
 
   const startAnalysis: AnalysisProps = () => {
-    if (value < 2) {
+    if (numberDisciplines < 2) {
       setOpen(true);
       setFeedBack({
         kind: "error",
@@ -76,16 +80,14 @@ const PageNumberDisciplines = () => {
             id="outlined-basic"
             label="Numero-de-Disciplinas"
             variant="outlined"
-            onChange={({ target }) => setValue(+target.value)}
-            defaultValue={value}
-            helperText={open && "Valor Inválido"}
+            onChange={({ target }) => setNumberDisciplines(+target.value)}
+            defaultValue={numberDisciplines}
           />
         </Box>
         <Button variant="contained" size="large" onClick={startAnalysis}>
           Começar
         </Button>
       </Box>
-      <CustomizedSnackbars />
     </Box>
   );
 };

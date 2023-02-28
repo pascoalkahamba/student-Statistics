@@ -29,12 +29,12 @@ export interface GlobalProps {
   themeName: ThemeMode;
   toggleTheme: () => void;
   open: boolean;
-  value: number;
+  numberDisciplines: number;
   feedBack: FeedBackProps;
   studentData: StudentsDataProps[];
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setFeedBack: React.Dispatch<React.SetStateAction<FeedBackProps>>;
-  setValue: React.Dispatch<React.SetStateAction<number>>;
+  setNumberDisciplines: React.Dispatch<React.SetStateAction<number>>;
   setStudentData: React.Dispatch<React.SetStateAction<StudentsDataProps[]>>;
 }
 
@@ -42,7 +42,7 @@ export const GlobalContext = createContext<GlobalProps | null>(null);
 
 export const GlobalStorage = ({ children }: GlobalStorageProps) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(0);
+  const [numberDisciplines, setNumberDisciplines] = useState(0);
   const [studentData, setStudentData] = useState<StudentsDataProps[]>([]);
   const [feedBack, setFeedBack] = useState<FeedBackProps>({
     kind: "error",
@@ -70,11 +70,11 @@ export const GlobalStorage = ({ children }: GlobalStorageProps) => {
         feedBack,
         toggleTheme,
         open,
-        value,
+        numberDisciplines,
         studentData,
         setStudentData,
         setOpen,
-        setValue,
+        setNumberDisciplines,
         setFeedBack,
       }}
     >
