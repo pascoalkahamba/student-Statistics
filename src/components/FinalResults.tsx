@@ -37,6 +37,7 @@ const FinalResults = () => {
   let bestDiscipline = "";
   let badDiscipline = studentData[0].discipline;
   let sumOfNotes = 0;
+  let foundDiscipline: typeof studentData = [];
 
   studentData.forEach(({ discipline, note }) => {
     highGrade = highGrade;
@@ -55,15 +56,15 @@ const FinalResults = () => {
 
   function foundDisciplineOrNote(disciplineOrNote: string | number) {
     if (disciplineOrNote === "discipline") {
-      const foundDiscipline = studentData.filter(
+      foundDiscipline = studentData.filter(
         ({ discipline }) => discipline === searchValue
       );
-      return console.log(foundDiscipline);
+      console.log(foundDiscipline);
     } else {
       const foundNote = studentData.filter(
         ({ note }) => +note === +searchValue
       );
-      return console.log(foundNote);
+      console.log(foundNote);
     }
   }
 
@@ -223,6 +224,12 @@ const FinalResults = () => {
           Procurar
         </Button>
       </Box>
+      {foundDiscipline.map((disc) => (
+        <div key={disc.discipline}>
+          <div>{disc.discipline}</div>
+          <span>{disc.note}</span>
+        </div>
+      ))}
     </Box>
   );
 };
