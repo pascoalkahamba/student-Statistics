@@ -74,7 +74,7 @@ const AddingDisciplines = () => {
     return <Navigate to="/final-results" />;
   }
 
-  function isDisciplineExists(discipline: boolean) {
+  function isThereDisciplineExists(discipline: boolean) {
     if (discipline) {
       setOpen(true);
       setFeedBack({
@@ -99,7 +99,7 @@ const AddingDisciplines = () => {
           ({ discipline }) => discipline === input.name
         );
 
-        isDisciplineExists(alreadyExists);
+        isThereDisciplineExists(alreadyExists);
       }
     }
   };

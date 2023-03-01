@@ -1,6 +1,7 @@
 import styled, { createGlobalStyle } from "styled-components";
 import { styled as styles } from "@mui/material";
 import Paper from "@mui/material/Paper";
+import { red, green } from "@mui/material/colors";
 
 export const GlobalStyles = createGlobalStyle`
  
@@ -57,5 +58,21 @@ export const Item = styles(Paper)(({ theme }) => ({
 }));
 
 export const Table = styled.table`
-  display: block;
+  margin-top: 2rem;
+  border: 2px solid #aaa;
+  border-collapse: collapse;
+
+  text-align: center;
+
+  td {
+    border: 2px solid #fff;
+    padding: 0.4rem;
+  }
+`;
+
+export const Thead = styled.thead`
+  th {
+    border: 2px solid #aaa;
+    padding: 0.4rem;
+  }
 `;

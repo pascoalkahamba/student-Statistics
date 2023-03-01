@@ -1,6 +1,6 @@
 import { Box, Stack, Typography, useTheme } from "@mui/material";
 import useGlobalStarage from "../hooks/useGlobalStarage";
-import { Item } from "../themes/MyStyles";
+import { Item, Table, Thead } from "../themes/MyStyles";
 import { red, green } from "@mui/material/colors";
 
 const FinalResults = () => {
@@ -46,6 +46,23 @@ const FinalResults = () => {
           </Item>
         ))}
       </Stack>{" "}
+      <Table>
+        <Thead>
+          <tr>
+            <th>Maior nota</th>
+            <th>Menor nota</th>
+            <th>Média das notas</th>
+          </tr>
+        </Thead>
+
+        <tbody>
+          <tr>
+            <td>15</td>
+            <td>9</td>
+            <td>10</td>
+          </tr>
+        </tbody>
+      </Table>
     </Box>
   );
 };
