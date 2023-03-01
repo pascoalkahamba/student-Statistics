@@ -6,8 +6,10 @@ import {
   Radio,
   RadioGroup,
   Stack,
+  TextField,
   Typography,
   useTheme,
+  Button,
 } from "@mui/material";
 import useGlobalStarage from "../hooks/useGlobalStarage";
 import { Item, Table, Thead } from "../themes/MyStyles";
@@ -18,8 +20,13 @@ type KindSearchPros =
   | ((event: React.ChangeEvent<HTMLInputElement>, value: string) => void)
   | undefined;
 
+type SearchDisciplineOrNoteProps =
+  | React.FormEventHandler<HTMLFormElement>
+  | undefined;
+
 const FinalResults = () => {
   const [kindSearch, setKindSearch] = useState("");
+  const [searchValue, setSearchValue] = useState<string | number>("");
   const {
     global: { studentData },
   } = useGlobalStarage();
@@ -32,7 +39,7 @@ const FinalResults = () => {
   let highGrade = 0;
   let lowScore = +studentData[0].note;
   let bestDiscipline = "";
-  let badDiscipline = "";
+  let badDiscipline = studentData[0].discipline;
   let sumOfNotes = 0;
 
   studentData.forEach(({ discipline, note }) => {
@@ -50,9 +57,14 @@ const FinalResults = () => {
     }
   });
 
-  const funKindSearch: KindSearchPros = ({ target }) => {
+  const clooseTheKindSearch: KindSearchPros = ({ target }) => {
     setKindSearch(target.value);
     console.log(target.value);
+  };
+
+  const searchDisciplineOrNote: SearchDisciplineOrNoteProps = (event) => {
+    event.preventDefault();
+    console.log(searchValue);
   };
 
   return (
@@ -159,7 +171,7 @@ const FinalResults = () => {
           row
           aria-labelledby="demo-radio-buttons-group-label"
           value={kindSearch}
-          onChange={funKindSearch}
+          onChange={clooseTheKindSearch}
           name="radio-buttons-group"
         >
           <FormControlLabel
@@ -170,6 +182,30 @@ const FinalResults = () => {
           <FormControlLabel value="male" control={<Radio />} label="Nota" />
         </RadioGroup>
       </FormControl>
+      <Box
+        component="form"
+        onSubmit={searchDisciplineOrNote}
+        sx={{
+          "& > :not(style)": { m: 1, width: "25ch" },
+          marginTop: "1rem",
+          display: "flex",
+          gap: "2rem",
+          justifyItems: "center",
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField
+          id="outlined-basic"
+          label="disciplina"
+          variant="outlined"
+          value={searchValue}
+          onChange={({ target }) => setSearchValue(target.value)}
+        />
+        <Button variant="contained" size="small" type="submit">
+          Procurar
+        </Button>
+      </Box>
     </Box>
   );
 };
