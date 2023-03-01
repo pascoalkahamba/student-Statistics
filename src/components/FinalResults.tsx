@@ -17,12 +17,12 @@ const FinalResults = () => {
   let lowScore = +studentData[0].note;
   let bestDiscipline = "";
   let badDiscipline = "";
-  let averageOfNotes = 0;
+  let sumOfNotes = 0;
 
   studentData.forEach(({ discipline, note }) => {
     highGrade = highGrade;
     lowScore = lowScore;
-    averageOfNotes += +note;
+    sumOfNotes += +note;
 
     if (+note > highGrade) {
       highGrade = +note;
@@ -66,24 +66,67 @@ const FinalResults = () => {
           </Item>
         ))}
       </Stack>{" "}
-      <Table>
+      <Table
+        style={{
+          border: `2px solid ${dark}`,
+        }}
+      >
         <Thead>
           <tr>
-            <th>Maior nota</th>
-            <th>Menor nota</th>
-            <th>Média das notas</th>
+            <th
+              style={{
+                border: `2px solid ${dark}`,
+              }}
+            >
+              Maior nota
+            </th>
+            <th
+              style={{
+                border: `2px solid ${dark}`,
+              }}
+            >
+              Menor nota
+            </th>
+            <th
+              style={{
+                border: `2px solid ${dark}`,
+              }}
+            >
+              Média das notas
+            </th>
           </tr>
         </Thead>
 
         <tbody>
           <tr>
-            <td>
+            <td
+              style={{
+                backgroundColor: `${highGrade > 9 ? green[500] : red[500]}`,
+                border: `2px solid ${dark}`,
+              }}
+            >
               {highGrade}({bestDiscipline})
             </td>
-            <td>
+            <td
+              style={{
+                backgroundColor: `${lowScore > 9 ? green[500] : red[500]}`,
+                border: `2px solid ${dark}`,
+              }}
+            >
               {lowScore}({badDiscipline})
             </td>
-            <td>10</td>
+            <td
+              style={{
+                backgroundColor: `${
+                  Math.round(sumOfNotes / studentData.length) > 9
+                    ? green[500]
+                    : red[500]
+                }`,
+                border: `2px solid ${dark}`,
+              }}
+            >
+              {Math.round(sumOfNotes / studentData.length)} Valores
+            </td>
           </tr>
         </tbody>
       </Table>
