@@ -12,8 +12,14 @@ import {
 import useGlobalStarage from "../hooks/useGlobalStarage";
 import { Item, Table, Thead } from "../themes/MyStyles";
 import { red, green } from "@mui/material/colors";
+import { useState } from "react";
+
+type KindSearchPros =
+  | ((event: React.ChangeEvent<HTMLInputElement>, value: string) => void)
+  | undefined;
 
 const FinalResults = () => {
+  const [kindSearch, setKindSearch] = useState("");
   const {
     global: { studentData },
   } = useGlobalStarage();
@@ -43,6 +49,11 @@ const FinalResults = () => {
       badDiscipline = discipline;
     }
   });
+
+  const funKindSearch: KindSearchPros = ({ target }) => {
+    setKindSearch(target.value);
+    console.log(target.value);
+  };
 
   return (
     <Box sx={{ width: "100%", marginTop: "60px", padding: ".5rem" }}>
@@ -147,7 +158,8 @@ const FinalResults = () => {
         <RadioGroup
           row
           aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="female"
+          value={kindSearch}
+          onChange={funKindSearch}
           name="radio-buttons-group"
         >
           <FormControlLabel
