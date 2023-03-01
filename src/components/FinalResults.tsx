@@ -14,13 +14,16 @@ const FinalResults = () => {
     },
   } = useTheme();
   let highGrade = 0;
-  let lowScore = 0;
+  let lowScore = +studentData[0].note;
   let bestDiscipline = "";
   let badDiscipline = "";
+  let averageOfNotes = 0;
 
   studentData.forEach(({ discipline, note }) => {
     highGrade = highGrade;
     lowScore = lowScore;
+    averageOfNotes += +note;
+
     if (+note > highGrade) {
       highGrade = +note;
       bestDiscipline = discipline;
