@@ -13,6 +13,23 @@ const FinalResults = () => {
       primary: { dark },
     },
   } = useTheme();
+  let highGrade = 0;
+  let lowScore = 0;
+  let bestDiscipline = "";
+  let badDiscipline = "";
+
+  studentData.forEach(({ discipline, note }) => {
+    highGrade = highGrade;
+    lowScore = lowScore;
+    if (+note > highGrade) {
+      highGrade = +note;
+      bestDiscipline = discipline;
+    }
+    if (+note < lowScore) {
+      lowScore = +note;
+      badDiscipline = discipline;
+    }
+  });
 
   return (
     <Box sx={{ width: "100%", marginTop: "60px", padding: ".5rem" }}>
@@ -57,8 +74,12 @@ const FinalResults = () => {
 
         <tbody>
           <tr>
-            <td>15</td>
-            <td>9</td>
+            <td>
+              {highGrade}({bestDiscipline})
+            </td>
+            <td>
+              {lowScore}({badDiscipline})
+            </td>
             <td>10</td>
           </tr>
         </tbody>
