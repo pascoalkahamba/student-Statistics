@@ -16,19 +16,15 @@ import { Item, Table, Thead } from "../themes/MyStyles";
 import { red, green } from "@mui/material/colors";
 import { useState } from "react";
 
-type KindSearchPros =
-  | ((event: React.ChangeEvent<HTMLInputElement>, value: string) => void)
-  | undefined;
-
 type SearchDisciplineOrNoteProps =
   | React.FormEventHandler<HTMLFormElement>
   | undefined;
 
 const FinalResults = () => {
-  const [kindSearch, setKindSearch] = useState("");
+  const [kindSearch, setKindSearch] = useState("discipline");
   const [searchValue, setSearchValue] = useState<string | number>("");
   const {
-    global: { studentData },
+    global: { studentData, setOpen, setFeedBack },
   } = useGlobalStarage();
 
   const {
@@ -57,14 +53,32 @@ const FinalResults = () => {
     }
   });
 
-  const clooseTheKindSearch: KindSearchPros = ({ target }) => {
-    setKindSearch(target.value);
-    console.log(target.value);
-  };
+  function foundDisciplineOrNote(disciplineOrNote: string | number) {
+    if (disciplineOrNote === "discipline") {
+      const foundDiscipline = studentData.filter(
+        ({ discipline }) => discipline === searchValue
+      );
+      return console.log(foundDiscipline);
+    } else {
+      const foundNote = studentData.filter(
+        ({ note }) => +note === +searchValue
+      );
+      return console.log(foundNote);
+    }
+  }
 
   const searchDisciplineOrNote: SearchDisciplineOrNoteProps = (event) => {
     event.preventDefault();
     console.log(searchValue);
+    if (searchValue === "") {
+      setOpen(true);
+      setFeedBack({
+        kind: "error",
+        message: "O campo de pesquisa não pode estar vazio",
+      });
+    } else {
+      foundDisciplineOrNote(kindSearch);
+    }
   };
 
   return (
@@ -171,15 +185,18 @@ const FinalResults = () => {
           row
           aria-labelledby="demo-radio-buttons-group-label"
           value={kindSearch}
-          onChange={clooseTheKindSearch}
+          onChange={({ target }) => {
+            setKindSearch(target.value);
+            setSearchValue("");
+          }}
           name="radio-buttons-group"
         >
           <FormControlLabel
-            value="female"
+            value="discipline"
             control={<Radio />}
             label="Disciplina"
           />
-          <FormControlLabel value="male" control={<Radio />} label="Nota" />
+          <FormControlLabel value="note" control={<Radio />} label="Nota" />
         </RadioGroup>
       </FormControl>
       <Box
@@ -197,7 +214,7 @@ const FinalResults = () => {
       >
         <TextField
           id="outlined-basic"
-          label="disciplina"
+          label={kindSearch === "discipline" ? "Disciplina" : "Nota"}
           variant="outlined"
           value={searchValue}
           onChange={({ target }) => setSearchValue(target.value)}
