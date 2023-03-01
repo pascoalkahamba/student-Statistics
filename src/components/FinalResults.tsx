@@ -1,4 +1,14 @@
-import { Box, Stack, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import useGlobalStarage from "../hooks/useGlobalStarage";
 import { Item, Table, Thead } from "../themes/MyStyles";
 import { red, green } from "@mui/material/colors";
@@ -130,6 +140,24 @@ const FinalResults = () => {
           </tr>
         </tbody>
       </Table>
+      <FormControl sx={{ marginTop: "2rem" }}>
+        <FormLabel id="demo-radio-buttons-group-label">
+          Escolha o tipo de pesquisa
+        </FormLabel>
+        <RadioGroup
+          row
+          aria-labelledby="demo-radio-buttons-group-label"
+          defaultValue="female"
+          name="radio-buttons-group"
+        >
+          <FormControlLabel
+            value="female"
+            control={<Radio />}
+            label="Disciplina"
+          />
+          <FormControlLabel value="male" control={<Radio />} label="Nota" />
+        </RadioGroup>
+      </FormControl>
     </Box>
   );
 };
