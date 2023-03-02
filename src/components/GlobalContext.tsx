@@ -51,7 +51,6 @@ export const GlobalStorage = ({ children }: GlobalStorageProps) => {
     "theme",
     "light"
   );
-  console.log(feedBack);
   const toggleTheme = useCallback(() => {
     setThemeName((otherTheme) => (otherTheme === "light" ? "dark" : "light"));
   }, []);

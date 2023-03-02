@@ -70,13 +70,11 @@ const FinalResults = () => {
       const foundDiscipline = studentData.filter(
         ({ discipline }) => discipline === searchValue
       );
-      console.log(foundDiscipline);
       setFoundResults(foundDiscipline);
     } else {
       const foundNote = studentData.filter(
         ({ note }) => +note === +searchValue
       );
-      console.log(foundNote);
       setFoundResults(foundNote);
     }
   }
@@ -93,7 +91,6 @@ const FinalResults = () => {
 
   const searchDisciplineOrNote: SearchDisciplineOrNoteProps = (event) => {
     event.preventDefault();
-    console.log(searchValue);
 
     if (searchValue === "") {
       setOpen(true);

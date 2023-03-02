@@ -90,7 +90,6 @@ const AddingDisciplines = () => {
     }
   }
 
-  console.count();
   const addDisciplines: addDisciplinesProps = () => {
     if (isEmpty(input)) setOpen(true);
     else {
@@ -103,8 +102,6 @@ const AddingDisciplines = () => {
       }
     }
   };
-
-  console.log(studentData);
 
   return (
     <Box sx={{ width: "100%", marginTop: "80px", padding: ".5rem" }}>
