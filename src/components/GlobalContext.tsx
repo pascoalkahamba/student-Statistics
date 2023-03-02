@@ -12,7 +12,7 @@ interface GlobalStorageProps {
   children: React.ReactNode;
 }
 
-interface StudentsDataProps {
+export interface StudentsDataProps {
   discipline: string;
   note: number;
 }

@@ -14,17 +14,19 @@ import {
 import useGlobalStarage from "../hooks/useGlobalStarage";
 import { Item, Table, Thead } from "../themes/MyStyles";
 import { red, green } from "@mui/material/colors";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { StudentsDataProps } from "./GlobalContext";
 
 type SearchDisciplineOrNoteProps =
   | React.FormEventHandler<HTMLFormElement>
   | undefined;
 
 const FinalResults = () => {
-  const [kindSearch, setKindSearch] = useState("discipline");
+  const [kindSearch, setKindSearch] = useState(" ");
   const [searchValue, setSearchValue] = useState<string | number>("");
+  const [foundResults, setFoundResults] = useState<StudentsDataProps[]>([]);
   const {
-    global: { studentData, setOpen, setFeedBack },
+    global: { studentData, setOpen, open, setFeedBack },
   } = useGlobalStarage();
 
   const {
@@ -37,7 +39,6 @@ const FinalResults = () => {
   let bestDiscipline = "";
   let badDiscipline = studentData[0].discipline;
   let sumOfNotes = 0;
-  let foundDiscipline: typeof studentData = [];
 
   studentData.forEach(({ discipline, note }) => {
     highGrade = highGrade;
@@ -54,18 +55,38 @@ const FinalResults = () => {
     }
   });
 
-  function foundDisciplineOrNote(disciplineOrNote: string | number) {
-    if (disciplineOrNote === "discipline") {
-      foundDiscipline = studentData.filter(
+  useEffect(() => {
+    if (
+      (foundResults.length === 0 && kindSearch === "discipline") ||
+      (foundResults.length === 0 && kindSearch === "note")
+    )
+      theDisciplineOrNoteExists();
+  }, [foundResults]);
+
+  function foundDisciplineOrNote() {
+    if (kindSearch === "discipline") {
+      const foundDiscipline = studentData.filter(
         ({ discipline }) => discipline === searchValue
       );
       console.log(foundDiscipline);
+      setFoundResults(foundDiscipline);
     } else {
       const foundNote = studentData.filter(
         ({ note }) => +note === +searchValue
       );
       console.log(foundNote);
+      setFoundResults(foundNote);
     }
+  }
+
+  function theDisciplineOrNoteExists() {
+    setOpen(true);
+    setFeedBack({
+      kind: "error",
+      message: `Está ${
+        kindSearch === "discipline" ? "Disciplina" : "Nota"
+      } não existe na sua pauta`,
+    });
   }
 
   const searchDisciplineOrNote: SearchDisciplineOrNoteProps = (event) => {
@@ -78,10 +99,9 @@ const FinalResults = () => {
         message: "O campo de pesquisa não pode estar vazio",
       });
     } else {
-      foundDisciplineOrNote(kindSearch);
+      foundDisciplineOrNote();
     }
   };
-
   return (
     <Box sx={{ width: "100%", marginTop: "60px", padding: ".5rem" }}>
       <Stack spacing={2}>
@@ -214,6 +234,10 @@ const FinalResults = () => {
         autoComplete="off"
       >
         <TextField
+          error={
+            (open && kindSearch === "discipline") ||
+            (open && kindSearch === "note")
+          }
           id="outlined-basic"
           label={kindSearch === "discipline" ? "Disciplina" : "Nota"}
           variant="outlined"
@@ -224,7 +248,7 @@ const FinalResults = () => {
           Procurar
         </Button>
       </Box>
-      {foundDiscipline.map((disc) => (
+      {foundResults.map((disc) => (
         <div key={disc.discipline}>
           <div>{disc.discipline}</div>
           <span>{disc.note}</span>
