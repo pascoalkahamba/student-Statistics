@@ -22,7 +22,7 @@ type SearchDisciplineOrNoteProps =
   | undefined;
 
 const FinalResults = () => {
-  const [kindSearch, setKindSearch] = useState(" ");
+  const [kindSearch, setKindSearch] = useState("");
   const [searchValue, setSearchValue] = useState<string | number>("");
   const [foundResults, setFoundResults] = useState<StudentsDataProps[]>([]);
   const {
@@ -89,9 +89,20 @@ const FinalResults = () => {
     });
   }
 
+  function theKindSearchIsEmpty() {
+    if (kindSearch === "") {
+      setOpen(true);
+      setFeedBack({
+        kind: "warning",
+        message: "Escolha o tipo de pesquisa para continuar",
+      });
+    }
+  }
+
   const searchDisciplineOrNote: SearchDisciplineOrNoteProps = (event) => {
     event.preventDefault();
     console.log(searchValue);
+
     if (searchValue === "") {
       setOpen(true);
       setFeedBack({
@@ -100,6 +111,7 @@ const FinalResults = () => {
       });
     } else {
       foundDisciplineOrNote();
+      theKindSearchIsEmpty();
     }
   };
   return (
@@ -134,6 +146,18 @@ const FinalResults = () => {
           </Item>
         ))}
       </Stack>{" "}
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={() => ({
+          backgroundColor: dark,
+          textAlign: "center",
+          marginTop: "2rem",
+          borderRadius: ".3rem",
+        })}
+      >
+        Detalhes dos Dados
+      </Typography>
       <Table
         style={{
           border: `2px solid ${dark}`,
@@ -248,11 +272,34 @@ const FinalResults = () => {
           Procurar
         </Button>
       </Box>
-      {foundResults.map((disc) => (
-        <div key={disc.discipline}>
-          <div>{disc.discipline}</div>
-          <span>{disc.note}</span>
-        </div>
+      {foundResults.length !== 0 && (
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={() => ({
+            backgroundColor: dark,
+            textAlign: "center",
+            marginTop: "2rem",
+            borderRadius: ".3rem",
+          })}
+        >
+          Resultado/s da Busca
+        </Typography>
+      )}
+      {foundResults.map(({ discipline, note }) => (
+        <Stack spacing={2} key={discipline}>
+          <Item
+            sx={{
+              alignItems: "center",
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "1rem",
+              wordSpacing: "5px",
+            }}
+          >
+            Diveste {note} valores na disciplina de {discipline}.
+          </Item>
+        </Stack>
       ))}
     </Box>
   );
