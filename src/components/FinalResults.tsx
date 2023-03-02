@@ -16,6 +16,7 @@ import { Item, Table, Thead } from "../themes/MyStyles";
 import { red, green } from "@mui/material/colors";
 import { useState, useEffect } from "react";
 import { StudentsDataProps } from "./GlobalContext";
+import { useNavigate } from "react-router-dom";
 
 type SearchDisciplineOrNoteProps =
   | React.FormEventHandler<HTMLFormElement>
@@ -29,6 +30,7 @@ const FinalResults = () => {
     global: { studentData, setOpen, open, setFeedBack },
   } = useGlobalStarage();
 
+  const navigate = useNavigate();
   const {
     palette: {
       primary: { dark },
@@ -36,7 +38,7 @@ const FinalResults = () => {
   } = useTheme();
   let highGrade = 0;
   let lowScore = +studentData[0].note;
-  let bestDiscipline = "";
+  let bestDiscipline = studentData[0].discipline;
   let badDiscipline = studentData[0].discipline;
   let sumOfNotes = 0;
 
@@ -89,16 +91,6 @@ const FinalResults = () => {
     });
   }
 
-  function theKindSearchIsEmpty() {
-    if (kindSearch === "") {
-      setOpen(true);
-      setFeedBack({
-        kind: "warning",
-        message: "Escolha o tipo de pesquisa para continuar",
-      });
-    }
-  }
-
   const searchDisciplineOrNote: SearchDisciplineOrNoteProps = (event) => {
     event.preventDefault();
     console.log(searchValue);
@@ -111,9 +103,14 @@ const FinalResults = () => {
       });
     } else {
       foundDisciplineOrNote();
-      theKindSearchIsEmpty();
+      if (kindSearch === "") setKindSearch("discipline");
     }
   };
+
+  function reloadPage() {
+    navigate("/");
+    window.location.reload();
+  }
   return (
     <Box sx={{ width: "100%", marginTop: "60px", padding: ".5rem" }}>
       <Stack spacing={2}>
@@ -301,6 +298,20 @@ const FinalResults = () => {
           </Item>
         </Stack>
       ))}
+      {foundResults.length !== 0 && (
+        <Box
+          component="div"
+          sx={{
+            alignItems: "center",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Button variant="contained" size="large" onClick={reloadPage}>
+            Reiniciar aplicação
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 };
