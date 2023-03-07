@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Box, Typography, useTheme, TextField, Button } from "@mui/material";
 import useGlobalStarage from "../hooks/useGlobalStarage";
 import { Navigate } from "react-router-dom";
@@ -16,10 +16,29 @@ interface ValidateProps {
   number: number | string;
 }
 
+const funSubjectName = (subjectName: string) => {
+  if (subjectName === "") {
+    return "O campo nome da disciplina não pode estar vazio.";
+  }
+  if (!Number.isNaN(+subjectName)) {
+    return "O nome da disciplina não pode ser um número";
+  }
+  return false;
+};
+
+const funSubjectPoint = (subjectPoint: number) => {
+  return (
+    (subjectPoint < 0 || subjectPoint > 20) &&
+    "A nota da disciplina tem que estar entre 0 e 20"
+  );
+};
+
 const AddingDisciplines = () => {
   const [input, setInput] = useState({ name: "", number: 0 });
-  const [nameError, setNameError] = useState(false);
-  const [numberError, setNumberError] = useState(false);
+  const inputName = useRef<HTMLInputElement>(null);
+
+  const nameError = funSubjectName(input.name);
+  const numberError = funSubjectPoint(input.number);
 
   const {
     global: {
@@ -41,24 +60,21 @@ const AddingDisciplines = () => {
     setInput({ ...input, [target.id]: target.value });
   };
 
-  function isEmpty({ name, number }: ValidateProps) {
-    if (name === "") {
-      setNameError(true);
-    }
-
-    if (number < 0 || number > 20 || number === "") {
-      setNumberError(true);
-    }
-
-    if (name === "" || number < 0 || number > 20 || number === "") {
+  function hasError() {
+    if (nameError) {
       setFeedBack({
         kind: "error",
-        message:
-          "O campo nome disciplina não pode estar vazio, e a nota tem estar entre 0 e 20",
+        message: nameError,
       });
-
+      return true;
+    } else if (numberError) {
+      setFeedBack({
+        kind: "error",
+        message: numberError,
+      });
       return true;
     }
+    return false;
   }
   useEffect(() => {
     if (studentData.length === numberDisciplines && numberDisciplines !== 0) {
@@ -87,11 +103,12 @@ const AddingDisciplines = () => {
         { discipline: input.name, note: input.number },
       ]);
       setInput({ name: "", number: 0 });
+      inputName.current?.focus();
     }
   }
 
   const addDisciplines: addDisciplinesProps = () => {
-    if (isEmpty(input)) setOpen(true);
+    if (hasError()) setOpen(true);
     else {
       if (studentData.length < numberDisciplines) {
         const alreadyExists = studentData.some(
@@ -139,6 +156,7 @@ const AddingDisciplines = () => {
           <TextField
             required
             error={nameError && open}
+            inputRef={inputName}
             onChange={handleChange}
             value={input.name}
             id="name"

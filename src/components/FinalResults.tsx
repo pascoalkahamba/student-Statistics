@@ -291,24 +291,23 @@ const FinalResults = () => {
               wordSpacing: "5px",
             }}
           >
-            Diveste {note} valores na disciplina de {discipline}.
+            Tiveste {note} valores na disciplina de {discipline}.
           </Item>
         </Stack>
       ))}
-      {foundResults.length !== 0 && (
-        <Box
-          component="div"
-          sx={{
-            alignItems: "center",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Button variant="contained" size="large" onClick={reloadPage}>
-            Reiniciar aplicação
-          </Button>
-        </Box>
-      )}
+      <Box
+        component="div"
+        sx={{
+          alignItems: "center",
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "2rem",
+        }}
+      >
+        <Button variant="contained" size="large" onClick={reloadPage}>
+          Reiniciar aplicação
+        </Button>
+      </Box>
     </Box>
   );
 };
