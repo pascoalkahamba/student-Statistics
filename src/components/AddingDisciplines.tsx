@@ -11,11 +11,6 @@ type addDisciplinesProps =
   | React.MouseEventHandler<HTMLButtonElement>
   | undefined;
 
-interface ValidateProps {
-  name: string;
-  number: number | string;
-}
-
 const funSubjectName = (subjectName: string) => {
   if (subjectName === "") {
     return "O campo nome da disciplina não pode estar vazio.";
@@ -26,9 +21,9 @@ const funSubjectName = (subjectName: string) => {
   return false;
 };
 
-const funSubjectPoint = (subjectPoint: number) => {
+const funSubjectPoint = (subjectPoint: number | string) => {
   return (
-    (subjectPoint < 0 || subjectPoint > 20) &&
+    (subjectPoint < 0 || subjectPoint > 20 || subjectPoint === "") &&
     "A nota da disciplina tem que estar entre 0 e 20"
   );
 };
@@ -100,13 +95,17 @@ const AddingDisciplines = () => {
     } else {
       setStudentData([
         ...studentData,
-        { discipline: input.name, note: input.number },
+        {
+          discipline: input.name,
+          note: input.number,
+        },
       ]);
       setInput({ name: "", number: 0 });
       inputName.current?.focus();
     }
   }
-
+  console.log(studentData);
+  console.log(Number.isNaN(input.number));
   const addDisciplines: addDisciplinesProps = () => {
     if (hasError()) setOpen(true);
     else {
@@ -155,7 +154,10 @@ const AddingDisciplines = () => {
         >
           <TextField
             required
-            error={nameError && open}
+            error={
+              (numberError === false && nameError && open) ||
+              (numberError && nameError && open)
+            }
             inputRef={inputName}
             onChange={handleChange}
             value={input.name}
@@ -165,7 +167,10 @@ const AddingDisciplines = () => {
           />
           <TextField
             required
-            error={numberError && open}
+            error={
+              (nameError === false && numberError && open) ||
+              (nameError && numberError && open)
+            }
             onChange={handleChange}
             value={input.number}
             type="number"
