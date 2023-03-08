@@ -104,8 +104,7 @@ const AddingDisciplines = () => {
       inputName.current?.focus();
     }
   }
-  console.log(studentData);
-  console.log(Number.isNaN(input.number));
+
   const addDisciplines: addDisciplinesProps = () => {
     if (hasError()) setOpen(true);
     else {
